@@ -1,0 +1,21 @@
+#!/usr/bin/bash
+
+touch /home/game/server/shutdown-unfinished
+tmux -S /var/tmux/shared-session send-keys -t game-server-session "say Stopping server" Enter "stop" Enter
+
+# it seems we have to wait a minute for it to really finish
+for i in {1..60}
+do
+	# wait one second
+	if timeout 1 /home/game/server/wait; then
+		echo "Server succesfully stopped."
+		rm /home/game/server/shutdown-unfinished
+		exit 0
+	fi
+	# try sending exit again
+	tmux -S /var/tmux/shared-session send-keys -t game-server-session "exit" Enter
+done
+
+# we waited and it never finished
+echo "Server is taking too long. Force killing."
+tmux -S /var/tmux/shared-session list-panes -a -F "#{pane_pid} #{session_name}" | grep 'game-server-session' | awk '{print $1}' | xargs kill -9

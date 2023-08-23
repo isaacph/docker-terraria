@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+
+tmux -S /var/tmux/shared-session attach -t game-server-session

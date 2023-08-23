@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+cd /home/game/server/
+tmux -S /var/tmux/shared-session new-session -s game-server-session -d
+tmux -S /var/tmux/shared-session send-keys -t game-server-session "./TerrariaServer.bin.x86_64" Enter
+
+#/usr/lib/jvm/jre-1.8.0-openjdk/bin/

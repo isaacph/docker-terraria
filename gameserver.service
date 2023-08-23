@@ -1,0 +1,16 @@
+[Unit]
+Description=Game Server Startup
+After=network.target
+
+[Service]
+User=game
+KillMode=none
+InaccessibleDirectories=/root /sys /srv /media -/lost+found
+WorkingDirectory=/home/game/server
+ReadWriteDirectories=/home/game/server
+ExecStart=/home/game/server/start
+ExecStop=/home/game/server/stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
