@@ -1,3 +1,0 @@
-#!/usr/bin/bash
-
-while tmux -S /var/tmux/shared-session has-session -t game-server-session; do sleep 1; done

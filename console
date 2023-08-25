@@ -1,3 +1,7 @@
 #!/usr/bin/bash
-
-tmux -S /var/tmux/shared-session attach -t game-server-session
+ 
+if ! tmux -S /var/tmp/session attach -t server ; then
+    echo "Error connecting to server session. Try sudo ~/bin/start"
+    echo "If that doesn't work, run sudo rm /var/tmp/session and try again"
+    exit 1
+fi

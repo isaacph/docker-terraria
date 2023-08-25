@@ -1,7 +1,25 @@
 #!/usr/bin/bash
+if ! ls /root 2> /dev/null ; then
+    echo "You must sudo this script"
+    exit 1
+fi
 
-cd /home/game/server/
-tmux -S /var/tmux/shared-session new-session -s game-server-session -d
-tmux -S /var/tmux/shared-session send-keys -t game-server-session "./TerrariaServer.bin.x86_64" Enter
+# ensure server config exists
+if [ ! -f "/home/game/data/serverconfig.txt" ]; then
+    cp /home/game/defaultserverconfig.txt /home/game/data/serverconfig.txt
+    chown -R game:game /home/game/data/serverconfig.txt
+fi
 
-#/usr/lib/jvm/jre-1.8.0-openjdk/bin/
+# start server in tmux
+if ! sudo -H -u game tmux -S /var/tmp/session new -s server -d '/home/game/bin/run' ; then
+    echo "Failed to start server: server session is already running. Check with ./console"
+    echo "If ./console gives you an regular terminal, type exit to close it"
+    exit 1
+fi
+#sudo -H -u game tmux -S /var/tmp/session new -s server -d '/home/game/bin/TerrariaServer -config /home/game/data/serverconfig.txt'
+
+# make session accessible
+chown -R game:console /var/tmp/session
+chmod g+rwx /var/tmp/session
+
+echo "finished start"

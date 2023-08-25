@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+
+# run server start start
+sudo /home/admin/bin/start
+
+echo "going to do root_start"
+# start ssh daemon to listen for admin connections
+/usr/sbin/sshd -D -o ListenAddress=0.0.0.0

@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+
+cd /home/game
+./bin/TerrariaServer -config /home/game/data/serverconfig.txt
+echo "Switching to regular terminal mode as 'game' user"
+bash

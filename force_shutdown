@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+if ! ls /root 2> /dev/null ; then
+    echo "You must sudo this script"
+    exit 1
+fi
+
+# sshd is what keeps the docker instance open so killing it will end the instance
+pkill ssh
+
